@@ -1,0 +1,26 @@
+sudo: required
+language: generic
+services:
+  - docker
+
+before_install:
+  - docker build -t abhighosh18/react-app -f ./client/Dockerfile.dev ./client
+  # - docker build -t abhighosh18/api -f ./server/Dockerfile.dev ./server
+
+# all of the scripts must return with exit code 0
+script:
+  - docker run -e CI=true abhighosh18/react-app npm run test -- --coverage
+  # - docker run -e CI=true abhighosh18/api npm run test
+
+after_success:
+  - docker build -t abhighosh18/multi-client ./client
+  - docker build -t abhighosh18/multi-nginx ./nginx
+  - docker build -t abhighosh18/multi-server ./server
+  - docker build -t abhighosh18/multi-worker ./worker
+  # log in to Docker cli
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # take build images and push them to docker hub
+  - docker push abhighosh18/multi-client
+  - docker push abhighosh18/multi-nginx
+  - docker push abhighosh18/multi-server
+  - docker push abhighosh18/multi-worker
