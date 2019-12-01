@@ -35,20 +35,32 @@ class Fib extends Component {
   };
 
   renderSeenIndexes() {
-    return (this.state.seenIndexes || [])
-      .map(({ number }) => number)
+    const { seenIndexes } = this.state;
+
+    if (!Array.isArray(seenIndexes) || seenIndexes.length === 0) {
+      return <p>No indices seen so far...</p>;
+    }
+
+    return seenIndexes
+      .map((seenIndex = {}) => seenIndex.number)
+      .filter(Boolean)
       .join(", ");
   }
 
   renderValues() {
+    const { values = {} } = this.state;
     const entries = [];
 
-    for (let key in this.state.values) {
+    for (let key in values) {
       entries.push(
         <div key={key}>
-          For index {key}, I calculated {this.state.values[key]}
+          For index {key}, I calculated {values[key]}
         </div>
       );
+    }
+
+    if (entries.length === 0) {
+      return <p>No valuees calculated so far...</p>;
     }
 
     return entries;

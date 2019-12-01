@@ -2,6 +2,9 @@ version: "3"
 services:
   nginx:
     restart: always
+    depends_on:
+      - client
+      - api
     build:
       dockerfile: Dockerfile.dev
       context: ./nginx
@@ -30,6 +33,8 @@ services:
       - PGPASSWORD=postgres_password
       - PGPORT=5432
   client:
+    depends_on:
+      - api
     build:
       dockerfile: Dockerfile.dev
       context: ./client
