@@ -14,7 +14,7 @@ class Fib extends Component {
   }
 
   async fetchValues() {
-    const { data } = await axios.get("/api/values/currennt");
+    const { data } = await axios.get("/api/values/current");
     if (!Array.isArray(data)) {
       this.setState({ values: [] });
     } else {
