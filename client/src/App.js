@@ -4,7 +4,6 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Fib from "./Fib";
 import OtherPage from "./OtherPage";
 
-import logo from "./logo.svg";
 import "./App.css";
 
 class App extends Component {
@@ -13,8 +12,7 @@ class App extends Component {
       <Router>
         <div className="App">
           <div className="App-header">
-            <img src={logo} className="App-logo" alt="logo" />
-            <h2>Welcome to React</h2>
+            <h2>Welcome to Multi-Container Fibonacci Calculator</h2>
           </div>
           <div style={{ marginTop: 20, marginBottom: 20 }}>
             <Link to="/" style={{ marginRight: 20 }}>

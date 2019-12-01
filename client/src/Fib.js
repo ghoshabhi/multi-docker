@@ -14,15 +14,21 @@ class Fib extends Component {
   }
 
   async fetchValues() {
-    const values = await axios.get("/api/values/current");
-    this.setState({ values: values.data });
+    const { data } = await axios.get("/api/values/currennt");
+    if (!Array.isArray(data)) {
+      this.setState({ values: [] });
+    } else {
+      this.setState({ values: data });
+    }
   }
 
   async fetchIndexes() {
-    const seenIndexes = await axios.get("/api/values/all");
-    this.setState({
-      seenIndexes: seenIndexes.data || []
-    });
+    const { data } = await axios.get("/api/values/all");
+    if (!Array.isArray(data)) {
+      this.setState({ seenIndexes: [] });
+    } else {
+      this.setState({ seenIndexes: data });
+    }
   }
 
   handleSubmit = async event => {
@@ -60,7 +66,7 @@ class Fib extends Component {
     }
 
     if (entries.length === 0) {
-      return <p>No valuees calculated so far...</p>;
+      return <p>No values calculated so far...</p>;
     }
 
     return entries;
